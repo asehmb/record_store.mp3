@@ -3,6 +3,16 @@
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+/*
+ * we could also search like we did in the pokedex, and have a div in the top right with results
+  * https://itunes.apple.com/search?term=${formattedTerm}&entity=song&limit=10
+  * this way we can limit it to 10 results
+  * but like then we also gotta get the albums which isn't working rekgardless
+  * might be able to add it into the entity tag tho
+  * https://performance-partners.apple.com/search-api
+*/
+
+
 export default function SearchPage() {
   const searchParams = useSearchParams();
   const searchTerm = searchParams.get('searchTerm') || '';
@@ -23,7 +33,7 @@ export default function SearchPage() {
         const formattedTerm = encodeURIComponent(searchTerm);
         console.log('Formatted Term:', formattedTerm);
         const res = await fetch(
-          `https://itunes.apple.com/search?term=${formattedTerm}&entity=song`,
+          `https://itunes.apple.com/search?term=${formattedTerm}&entity=song&media=music`,
           { cache: 'no-store' }
         );
         const data = await res.json();
