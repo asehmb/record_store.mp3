@@ -1,44 +1,30 @@
 import Image from "next/image";
 import styles from "./page.module.css";
-import dbConnect from "./database/connectDb";
+import dbConnect from "@/database/connectDb";
+import reviewSchema from "@/models/review";
 import mongoose from 'mongoose';
-
+import Link from 'next/link'
+import SearchBar from "@/components/SearchBar/page";
 
 
 export default async function Home() {
 
-  await dbConnect();
+  const res = await fetch(
+    'https://itunes.apple.com/search?term=Money+Trees&entity=song',
+    { cache: 'no-store' }
+  );
 
-  const reviewSchema = new mongoose.Schema({
-    name: String,
-    song: String,
-    artist: String,
-    album: String,
-    email: String,
-    review: String,
-    rating: Number,
-  });
-
-  const Review = mongoose.model("Review", reviewSchema);
-
-  const review = new Review({
-    name: "AJ",
-    song: "where's the conffetti?",
-    artist: "jev.",
-    album: "the color grey.",
-    email: "asehmbi11@gmail.com",
-    review: "this shi fire",
-    rating: 5,
-  });
-
-  await review.save();
-  console.log("Review saved:", review);
-  const reviews = await Review.find();
-
+  const data = await res.json();
+  const songs = data.results;
+  const searchTerm = 'Search..';
 
   return (
-    <div className={styles.site}>
+    <main className="p-6">
+      <h1>Money Trees:</h1>
+      <SearchBar/>
+      <ul>
 
-    </div>
+      </ul>
+    </main>
   );
 }
