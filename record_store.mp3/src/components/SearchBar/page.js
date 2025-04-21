@@ -10,7 +10,6 @@ export default function SearchBar( ) {
     <div>
       <input
         type="text"
-        className="border px-3 py-2 rounded"
         placeholder="Search song..."
         onChange={(e) => setSearchTerm(e.target.value)}
       />

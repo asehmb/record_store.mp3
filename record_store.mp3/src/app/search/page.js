@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -49,6 +50,18 @@ export default function SearchPage() {
     fetchSongs();
   }, [searchTerm]);
 
+
+  function slugify(text) {
+    return text
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/&/g, "and")
+      .replace(/[^a-z0-9\s-]/g, "")
+      .replace(/[\s\-]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+  }
+
   return (
     <div style={{ padding: '2rem' }}>
       <h1>Search Results for "{searchTerm}"</h1>
@@ -62,7 +75,10 @@ export default function SearchPage() {
       <ul>
         {songs.map((song) => (
           <li key={song.trackId} style={{ marginBottom: '1rem' }}>{song.trackName} by {song.artistName}
-
+            <Link href={{pathname: `reviews/${slugify(song.trackName)}-${slugify(song.artistName)}`
+                          }} >
+            {song.trackName} by {song.artistName}
+            </Link>
           </li>
         ))}
       </ul>
