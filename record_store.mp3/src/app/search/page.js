@@ -53,13 +53,13 @@ export default function SearchPage() {
 
   function slugify(text) {
     return text
-      .normalize("NFD")
+      .normalize("NFD") // remove accents
       .replace(/[\u0300-\u036f]/g, "")
-      .toLowerCase()
-      .replace(/&/g, "and")
-      .replace(/[^a-z0-9\s-]/g, "")
-      .replace(/[\s\-]+/g, "-")
-      .replace(/^-+|-+$/g, "");
+      .toLowerCase() // lowercase
+      .replace(/&/g, "and") // replace & with 'and'
+      .replace(/[^a-z0-9\s$-]/g, "") // keep only alphanumeric characters, spaces, and $-
+      .replace(/[\s\-]+/g, "-") // replace spaces and multiple - with a single -
+      .replace(/^-+|-+$/g, ""); // trim - from start and end
   }
 
   return (
@@ -75,7 +75,7 @@ export default function SearchPage() {
       <ul>
         {songs.map((song) => (
           <li key={song.trackId} style={{ marginBottom: '1rem' }}>{song.trackName} by {song.artistName}
-            <Link href={{pathname: `reviews/${slugify(song.trackName)}-${slugify(song.artistName)}`
+            <Link href={{pathname: `reviews/${song.trackId}-${slugify(song.trackName)}-${slugify(song.artistName)}`
                           }} >
             {song.trackName} by {song.artistName}
             </Link>
