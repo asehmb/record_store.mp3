@@ -1,5 +1,5 @@
 import styles from "./header.module.css"
-import { SearchBar } from "../SearchBar/page"
+import SearchBar from "../SearchBar/page"
 import Link from "next/link"
 
 
