@@ -9,8 +9,12 @@ const reviewSchema = new mongoose.Schema({
     email: String,
     review: String,
     rating: Number,
-    trackId: Number, // from iTunes API
-    
+    trackId: {
+      type: String,
+      required: true,
+      index: true, //makes it the index to speed up
+    },
+       
   });
 
 export default mongoose.models.Review || mongoose.model('Review', reviewSchema);

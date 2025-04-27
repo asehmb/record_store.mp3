@@ -20,6 +20,22 @@ async function getReviewData(trackId) {
   return res.json();
 }
 
+
+// review is a reviewSchema from models/review.js
+async function sendReviewData(trackId, review) {
+  const res = await fetch(`${process.env.API_HOST}/api/reviews/${trackId}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(review),
+  });
+  if (!res.ok) {
+    throw new Error('Failed to send review data');
+  }
+  return res.json();
+}
+
 export default async function Page({
   params, 
 }: {
